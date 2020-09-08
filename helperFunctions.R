@@ -202,13 +202,13 @@ pairEndReadsToGenes <- function(parCluster, bedPEGzFile, gAnnot){
     tmpIF <- subset(inputFile, chr == iChr)
     tmpGA <- subset(gAnnot, chr == iChr)
     tmpO <- lapply(tmpGA$name, function(iGene){
-      exBlock <- exonBlockGen(iGene, geneAnnot)
-      if(geneAnnot[iGene, "strand"] == "+"){
+      exBlock <- exonBlockGen(iGene, gAnnot)
+      if(gAnnot[iGene, "strand"] == "+"){
         tmpDF <- subset(tmpIF, strand == "+" & start_r1 %in% exBlock & end_r2 %in% exBlock)
         tmpDF$start <- match(tmpDF$start_r1, exBlock)
         tmpDF$end <- match(tmpDF$end_r2, exBlock)
         tmpDF <- tmpDF[,c("chr", "start", "end")]
-      }else if(geneAnnot[iGene, "strand"] == "-"){
+      }else if(gAnnot[iGene, "strand"] == "-"){
         tmpDF <- subset(tmpIF, strand == "-" & start_r2 %in% exBlock & end_r1 %in% exBlock)
         tmpDF$start <- match(tmpDF$end_r1, exBlock)
         tmpDF$end <- match(tmpDF$start_r2, exBlock)
